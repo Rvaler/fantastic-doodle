@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1440566162 source:c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\environm.cpp
+	"environm.h"
+	"soccerdef.hpp"
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1440563382 c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\environm.h
+	"sock.hpp"
+	"geom.hpp"
+
+1440563650 c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\sock.hpp
+	<stdexcept>
+	"basetp.hpp"
+
+1440558794 c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\basetp.hpp
+
+1440564102 c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\geom.hpp
+	<math.h>
+
+1440558794 c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\soccerdef.hpp
+
+1440563990 source:c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\library\sock.cpp
+	"sock.hpp"
+	<winsock2.h>
+	<mem.h>
+	<memory.h>
+	<errno.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<unistd.h>
+
+1461025845 source:c:\users\matheusbica\desktop\final\bicabortoluzzirobotfuzzy\main.cpp
+	"library/environm.h"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
