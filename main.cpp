@@ -46,16 +46,13 @@ int main( int argc, char* argv[] ) {
 
     //Conjuntos utilizados e valores:
 
-    //                                    Esquerda     Frente       Direita
-    float anguloConjuntoBola[3][3] = {{-PI,-PI/2,0},{-PI/2,0,PI/2},{0,PI/2,PI}};
-    float anguloConjuntoAlvo[3][3] = {{-PI,-PI/2,0},{-PI/2,0,PI/2},{0,PI/2,PI}};
-    float anguloConjuntoObstaculo[3][3] = {{-PI,-PI/2,0},{-PI/2,0,PI/2},{0,PI/2,PI}};
-    float rotacaoConjuntoRobo[3][3] = {{-PI,-PI/2,0},{-PI/2,0,PI/2},{0,PI/2,PI}};
+    //                         Esquerda     Frente       Direita
+    float angles[3][3] = {{-PI,-PI/2,0},{-PI/2,0,PI/2},{0,PI/2,PI}};
 
-    //                                    Próximo           Médio       Distante
-    float conjuntodistance_obstacle[3][3] = {{0,1,50},{50,500,950},{500,1985,1990}};
+    //                         Próximo     Médio       Distante
+    float distances[3][3] = {{0,1,50},{50,500,950},{500,1985,1990}};
 
-    while (1)
+    while (true)
     {
         // Valores providos do ambiente
         float angle_ball = environment.getBallAngle();
@@ -80,65 +77,65 @@ int main( int argc, char* argv[] ) {
         float total_value_left_rules = 0, total_value_front_rules = 0, total_value_right_rules = 0;
 
         // Verifica ativação de ANGULO BOLA
-        if (anguloConjuntoBola[0][0] <= angle_ball && angle_ball <= anguloConjuntoBola[0][2]) { //verifica se o valor está entre -PI e 0, se estiver pertence ao conjunto E
+        if (angles[0][0] <= angle_ball && angle_ball <= angles[0][2]) { //verifica se o valor está entre -PI e 0, se estiver pertence ao conjunto E
             isBall_left = true;
-            fuzz_value_ball_left = fuzzify(anguloConjuntoBola[0][0],anguloConjuntoBola[0][1],anguloConjuntoBola[0][2],angle_ball);
+            fuzz_value_ball_left = fuzzify(angles[0][0],angles[0][1],angles[0][2],angle_ball);
         }
-        if (anguloConjuntoBola[1][0] <= angle_ball && angle_ball <= anguloConjuntoBola[1][2]) { //verifica se o valor está entre -1 e 1, se estiver pertence ao conjunto F
+        if (angles[1][0] <= angle_ball && angle_ball <= angles[1][2]) { //verifica se o valor está entre -1 e 1, se estiver pertence ao conjunto F
             isBall_front = true;
-            fuzz_value_ball_front = fuzzify(anguloConjuntoBola[1][0],anguloConjuntoBola[1][1],anguloConjuntoBola[1][2],angle_ball);
+            fuzz_value_ball_front = fuzzify(angles[1][0],angles[1][1],angles[1][2],angle_ball);
         }
-        if (anguloConjuntoBola[2][0] <= angle_ball && angle_ball <= anguloConjuntoBola[2][2]) { //verifica se o valor está entre 0 e PI, se estiver pertence ao conjunto D
+        if (angles[2][0] <= angle_ball && angle_ball <= angles[2][2]) { //verifica se o valor está entre 0 e PI, se estiver pertence ao conjunto D
             isBall_right = true;
-            fuzz_value_ball_right = fuzzify(anguloConjuntoBola[2][0],anguloConjuntoBola[2][1],anguloConjuntoBola[2][2],angle_ball);
+            fuzz_value_ball_right = fuzzify(angles[2][0],angles[2][1],angles[2][2],angle_ball);
         }
 
         // Verifica ativação de ANGULO ALVO
-        if (anguloConjuntoAlvo[0][0] <= angle_target && angle_target <= anguloConjuntoAlvo[0][2]) { //verifica se o valor está entre -PI e 0, se estiver pertence ao conjunto E
+        if (angles[0][0] <= angle_target && angle_target <= angles[0][2]) { //verifica se o valor está entre -PI e 0, se estiver pertence ao conjunto E
             isTarget_left = true;
-            fuzz_value_target_left = fuzzify(anguloConjuntoAlvo[0][0],anguloConjuntoAlvo[0][1],anguloConjuntoAlvo[0][2],angle_target);
+            fuzz_value_target_left = fuzzify(angles[0][0],angles[0][1],angles[0][2],angle_target);
         }
-        if (anguloConjuntoAlvo[1][0] <= angle_target && angle_target <= anguloConjuntoAlvo[1][2]) { //verifica se o valor está entre -1 e 1, se estiver pertence ao conjunto F
+        if (angles[1][0] <= angle_target && angle_target <= angles[1][2]) { //verifica se o valor está entre -1 e 1, se estiver pertence ao conjunto F
             isTarget_front = true;
-            fuzz_value_target_front = fuzzify(anguloConjuntoAlvo[1][0],anguloConjuntoAlvo[1][1],anguloConjuntoAlvo[1][2],angle_target);
+            fuzz_value_target_front = fuzzify(angles[1][0],angles[1][1],angles[1][2],angle_target);
         }
-        if (anguloConjuntoAlvo[2][0] <= angle_target && angle_target <= anguloConjuntoAlvo[2][2]) { //verifica se o valor está entre 0 e PI, se estiver pertence ao conjunto D
+        if (angles[2][0] <= angle_target && angle_target <= angles[2][2]) { //verifica se o valor está entre 0 e PI, se estiver pertence ao conjunto D
             isTarget_right = true;
-            fuzz_value_target_right = fuzzify(anguloConjuntoAlvo[2][0],anguloConjuntoAlvo[2][1],anguloConjuntoAlvo[2][2],angle_target);
+            fuzz_value_target_right = fuzzify(angles[2][0],angles[2][1],angles[2][2],angle_target);
         }
 
         // DISTANCIA ATE OBSTACULO
-        if (conjuntodistance_obstacle[0][0] <= distance_obstacle && distance_obstacle <= conjuntodistance_obstacle[0][2]) {
+        if (distances[0][0] <= distance_obstacle && distance_obstacle <= distances[0][2]) {
              // Ativa se o obstáculo estiver a uma distância pequena
             isObstacle_distance_small = true;
-            fuzz_value_distance_small = fuzzify(conjuntodistance_obstacle[0][0],conjuntodistance_obstacle[0][1],conjuntodistance_obstacle[0][2],distance_obstacle);
+            fuzz_value_distance_small = fuzzify(distances[0][0],distances[0][1],distances[0][2],distance_obstacle);
         }
-        if (conjuntodistance_obstacle[1][0] <= distance_obstacle && distance_obstacle <= conjuntodistance_obstacle[1][2]) {
+        if (distances[1][0] <= distance_obstacle && distance_obstacle <= distances[1][2]) {
             // Ativa se o obstáculo estiver a uma distância média
             isObstacle_distance_medium = true;
-            fuzz_value_distance_medium = fuzzify(conjuntodistance_obstacle[1][0],conjuntodistance_obstacle[1][1],conjuntodistance_obstacle[1][2],distance_obstacle);
+            fuzz_value_distance_medium = fuzzify(distances[1][0],distances[1][1],distances[1][2],distance_obstacle);
         }
-        if (conjuntodistance_obstacle[2][0] <= distance_obstacle && distance_obstacle <= conjuntodistance_obstacle[2][2]) {
+        if (distances[2][0] <= distance_obstacle && distance_obstacle <= distances[2][2]) {
              // Ativa se o obstáculo estiver a uma distância longa
             isObstacle_distance_big = true;
-            fuzz_value_distance_big = fuzzify(conjuntodistance_obstacle[2][0],conjuntodistance_obstacle[2][1],conjuntodistance_obstacle[2][2],distance_obstacle);
+            fuzz_value_distance_big = fuzzify(distances[2][0],distances[2][1],distances[2][2],distance_obstacle);
         }
 
         // ANGULO OBSTACULO
-        if (anguloConjuntoObstaculo[0][0] <= angle_obstacle && angle_obstacle <= anguloConjuntoObstaculo[0][2]) {
+        if (angles[0][0] <= angle_obstacle && angle_obstacle <= angles[0][2]) {
             // ativa se o obstaculo estiver a esquerda
             isObstacle_left = true;
-            fuzz_value_obstacle_left = fuzzify(anguloConjuntoObstaculo[0][0],anguloConjuntoObstaculo[0][1],anguloConjuntoObstaculo[0][2],angle_obstacle);
+            fuzz_value_obstacle_left = fuzzify(angles[0][0],angles[0][1],angles[0][2],angle_obstacle);
         }
-        if (anguloConjuntoObstaculo[1][0] <= angle_obstacle && angle_obstacle <= anguloConjuntoObstaculo[1][2]) {
+        if (angles[1][0] <= angle_obstacle && angle_obstacle <= angles[1][2]) {
             // ativa se o obstaculo estiver a frente
             isObstacle_front = true;
-            fuzz_value_obstacle_front = fuzzify(anguloConjuntoObstaculo[1][0],anguloConjuntoObstaculo[1][1],anguloConjuntoObstaculo[1][2],angle_obstacle);
+            fuzz_value_obstacle_front = fuzzify(angles[1][0],angles[1][1],angles[1][2],angle_obstacle);
         }
-        if (anguloConjuntoObstaculo[2][0] <= angle_obstacle && angle_obstacle <= anguloConjuntoObstaculo[2][2]) {
+        if (angles[2][0] <= angle_obstacle && angle_obstacle <= angles[2][2]) {
             // ativa se o obstaculo estiver a direita
             isObstacle_right = true;
-            fuzz_value_obstacle_right = fuzzify(anguloConjuntoObstaculo[2][0],anguloConjuntoObstaculo[2][1],anguloConjuntoObstaculo[2][2],angle_obstacle);
+            fuzz_value_obstacle_right = fuzzify(angles[2][0],angles[2][1],angles[2][2],angle_obstacle);
         }
 
         //Calcula valores das regras, aqui vai o cálculo do Mamdami------------------------------------------------------------
@@ -199,19 +196,19 @@ int main( int argc, char* argv[] ) {
         for(float x = -PI; x <= PI; x+= 0.1)
         {
             float y = 0;
-            if(rotacaoConjuntoRobo[0][0] <= x && x <= rotacaoConjuntoRobo[0][2])
+            if(angles[0][0] <= x && x <= angles[0][2])
             {
-                y = max(min(fuzzify(rotacaoConjuntoRobo[0][0],rotacaoConjuntoRobo[0][1],rotacaoConjuntoRobo[0][2], x), total_value_left_rules), y);
+                y = max(min(fuzzify(angles[0][0],angles[0][1],angles[0][2], x), total_value_left_rules), y);
             }
 
-            if(rotacaoConjuntoRobo[1][0] <= x && x <= rotacaoConjuntoRobo[1][2])
+            if(angles[1][0] <= x && x <= angles[1][2])
             {
-                y = max(min(fuzzify(rotacaoConjuntoRobo[1][0],rotacaoConjuntoRobo[1][1],rotacaoConjuntoRobo[1][2], x), total_value_front_rules), y);
+                y = max(min(fuzzify(angles[1][0],angles[1][1],angles[1][2], x), total_value_front_rules), y);
             }
 
-            if(rotacaoConjuntoRobo[2][0] <= x && x <= rotacaoConjuntoRobo[2][2])
+            if(angles[2][0] <= x && x <= angles[2][2])
             {
-                y = max(min(fuzzify(rotacaoConjuntoRobo[2][0],rotacaoConjuntoRobo[2][1],rotacaoConjuntoRobo[2][2], x), total_value_right_rules), y);
+                y = max(min(fuzzify(angles[2][0],angles[2][1],angles[2][2], x), total_value_right_rules), y);
             }
             sumXY += x * y;
             sumY += y;
